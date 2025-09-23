@@ -27,8 +27,16 @@ function createObject() {
     let newObjectDropdownName = document.createElement("summary");
     newObjectDropdown.style.marginLeft = "20px";
     newObjectDropdown.style.marginBottom = "5px";
+    newObjectDropdown.className = "objectDropdown";
+    newObjectDropdown.id = "objectDropdown_" + objectId;
+    newObjectDropdownName.className = "objectDropdownSummary";
     newObjectDropdownName.textContent = objectId.value;
     newObjectDropdownName.style.marginBottom = "10px";
+
+    //let selectActiveBtn = document.createElement("button");
+    //selectActiveBtn.textContent = "select";
+    //selectActiveBtn.className = "selectActiveBtn";
+    //newObjectDropdownName.appendChild(selectActiveBtn);
 
     let objectTextEditor = document.createElement("input");
     let objectColorEditor = document.createElement("input");
@@ -49,6 +57,19 @@ function createObject() {
 
     newObjectDropdown.appendChild(newObjectDropdownName);
     sceneDropdown.appendChild(newObjectDropdown);
+
+    document.querySelectorAll(".objectDropdown").forEach(dropdown => {
+        dropdown.addEventListener("toggle", function () {
+            if (this.open) {
+                // Close all other dropdowns
+                document.querySelectorAll(".objectDropdown").forEach(otherDropdown => {
+                    if (otherDropdown !== this) {
+                        otherDropdown.removeAttribute("open");
+                    }
+                });
+            }
+        });
+    });
 
 
     objectText.value = "";

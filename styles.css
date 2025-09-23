@@ -6,7 +6,7 @@ html {
 
 @keyframes alphaInOut {
     0% {
-        opacity: 0;
+        opacity: 1;
     }
 
     50% {
@@ -30,9 +30,11 @@ html {
     justify-content: center;
     flex-direction: column;
     background-color: #525d64;
+    opacity: 0;
+    z-index: 1000;
 
     animation: alphaInOut;
-    animation-duration: 10s;
+    animation-duration: 6s;
 }
 
 #loadingLogo, #loadingText {
@@ -212,10 +214,24 @@ summary:hover {
     background-color: #393b40;
 }
 
+.objectDropdown[open] .objectDropdownSummary {
+    background-color: rgb(83, 83, 230);
+}
+
 #animCodeEditor {
     width: 100%;
     height: 100%;
     resize: none;
     outline: none;
     margin-right: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding: 5px;
+    padding-right: 15px;
+}
+
+.selectActiveBtn {
+    height: 17px;
+    margin-left: 10px;
+    margin-top: 3px;
 }
