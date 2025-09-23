@@ -98,16 +98,20 @@ html {
     align-items: center;
     justify-content: center;
     flex-direction: row;
+    position: absolute;
+    top: 0;
+    bottom: 170px;
     width: 100%;
-    height: 80%;
 }
 
 #keyframeEditor {
     display: flex;
     float: bottom;
     background-color: #393b40;
+    position: absolute;
     width: 100%;
-    height: 20%;
+    height: 170px;
+    bottom: 0;
     border-top: 3px solid black;
 }
 
@@ -216,11 +220,16 @@ summary:hover {
 
 .objectDropdown[open] .objectDropdownSummary {
     background-color: rgb(83, 83, 230);
+    margin-bottom: 10px;
+}
+
+.objectDropdown[open] {
+    padding-bottom: 10px;
 }
 
 #animCodeEditor {
     width: 100%;
-    height: 100%;
+    height: 300px;
     resize: none;
     outline: none;
     margin-right: 10px;
@@ -228,6 +237,10 @@ summary:hover {
     border-bottom-left-radius: 10px;
     padding: 5px;
     padding-right: 15px;
+}
+
+#animCodeEditor:hover {
+    background-color: #515358;
 }
 
 .selectActiveBtn {
