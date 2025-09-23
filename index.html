@@ -16,7 +16,9 @@
         <div id="editor">
             <div id="previewEditorArea">
                 <div id="sidebarLeft">
-
+                    <details id="sceneDropdown" open>
+                        <summary>Scene</summary>
+                    </details>
                 </div>
 
                 <div id="previewArea">
@@ -25,34 +27,45 @@
 
                 <div id="sidebarRight">
                     <div class="sidebarPanel">
-                        <h4 class="sidebarPanelHeader">Create Object</h4>
+                        <h4 class="sidebarPanelHeader">Create Text Object</h4>
                         
-                        <input type="text" placeholder="Object text" style="width: 97%; margin-bottom: 5px;">
-
-                        <select id="fontselector" style="width: 100%; margin-bottom: 5px;">
-                            <option value="nullFont">Object font</option>
-
-                            <option value="Arial" style="font-family: Arial;">Arial</option>
-                            <option value="Verdana, Geneva, Tahoma, sans-serif" style="font-family: Verdana;">Verdana</option>
-                            <option value="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" style="font-family: Tahoma;">Tahoma</option>
-                            <option value="'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif" style="font-family: 'Trebuchet MS';">Trebuchet MS</option>
-                            <option value="'Times New Roman'" style="font-family: 'Times New Roman';">Times New Roman</option>
-                            <option value="Georgia, 'Times New Roman', Times, serif" style="font-family: Georgia;">Georgia</option>
-                            <option value="Garamond" style="font-family: Garamond;">Garamond</option>
-                            <option value="'Courier New'" style="font-family: 'Courier New';">Courier New</option>
-                            <option value="'Brush Script MT'" style="font-family: 'Brush Script MT';">Brush Script MT</option>
-                            <option value="Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif" style="font-family: Impact;">Impact</option>
-                            <option value="'Comic Sans MS'" style="font-family: 'Comic Sans MS';">Comic Sans MS</option>
-                            <option value="'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif" style="font-family: 'Lucida Console';">Lucida Console</option>
-                            <option value="'Palatino Linotype'" style="font-family: 'Palatino Linotype';">Palatino Linotype</option>
-                            <option value="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" style="font-family: 'Segoe UI';">Segoe UI</option>
-                            <option value="Optima" style="font-family: Optima;">Optima</option>
-                        </select>
+                        <input id="objTxtInput" type="text" placeholder="Object text" style="width: 97%; margin-bottom: 5px;">
 
                         <div class="inputRow">
-                            <input type="color" placeholder="Object Color" style="width: 100%; margin-right: 5px; height: 24px;">
-                            <input type="text" placeholder="Object ID" style="width: 100%;">
+                            <select id="fontselector" class="inputRowBtns" style="width: 70%; height: 25px; margin-bottom: 5px; margin-right: 5px;">
+                                <option value="nullFont">Object font</option>
+
+                                <option value="Arial" style="font-family: Arial;">Arial</option>
+                                <option value="Verdana, Geneva, Tahoma, sans-serif" style="font-family: Verdana;">Verdana</option>
+                                <option value="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" style="font-family: Tahoma;">Tahoma</option>
+                                <option value="'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif" style="font-family: 'Trebuchet MS';">Trebuchet MS</option>
+                                <option value="'Times New Roman'" style="font-family: 'Times New Roman';">Times New Roman</option>
+                                <option value="Georgia, 'Times New Roman', Times, serif" style="font-family: Georgia;">Georgia</option>
+                                <option value="Garamond" style="font-family: Garamond;">Garamond</option>
+                                <option value="'Courier New'" style="font-family: 'Courier New';">Courier New</option>
+                                <option value="'Brush Script MT'" style="font-family: 'Brush Script MT';">Brush Script MT</option>
+                                <option value="Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif" style="font-family: Impact;">Impact</option>
+                                <option value="'Comic Sans MS'" style="font-family: 'Comic Sans MS';">Comic Sans MS</option>
+                                <option value="'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif" style="font-family: 'Lucida Console';">Lucida Console</option>
+                                <option value="'Palatino Linotype'" style="font-family: 'Palatino Linotype';">Palatino Linotype</option>
+                                <option value="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" style="font-family: 'Segoe UI';">Segoe UI</option>
+                                <option value="Optima" style="font-family: Optima;">Optima</option>
+                            </select>
+
+                            <input id="fontSizeInput" type="number" placeholder="Font size" style="width: 30%; height: 21px;">
                         </div>
+
+                        <div class="inputRow">
+                            <input id="objColorInput" type="color" placeholder="Object Color" style="width: 100%; margin-right: 5px; height: 24px;">
+                            <input id="objIdInput" type="text" placeholder="Object ID" style="width: 100%; margin-right: 5px;">
+                            <button class="inputRowBtns" onclick="createObject()" style="height: 24px;">Create</button>
+                        </div>
+                    </div>
+
+                    <div class="sidebarPanel">
+                        <h4 class="sidebarPanelHeader">Object Animation</h4>
+                        
+                        <textarea id="animCodeEditor"></textarea>
                     </div>
                 </div>
             </div>

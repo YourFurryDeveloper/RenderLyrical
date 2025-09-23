@@ -97,7 +97,7 @@ html {
     justify-content: center;
     flex-direction: row;
     width: 100%;
-    height: 100%;
+    height: 80%;
 }
 
 #keyframeEditor {
@@ -105,7 +105,7 @@ html {
     float: bottom;
     background-color: #393b40;
     width: 100%;
-    height: 30%;
+    height: 20%;
     border-top: 3px solid black;
 }
 
@@ -125,25 +125,34 @@ html {
     background-color: #393b40;
     aspect-ratio: 16 / 9;
     width: 100%;
+    user-select: none; 
 }
 
 
 #sidebarLeft {
     display: flex;
+    flex-direction: column;
     float: left;
+    overflow-y: scroll;
+    overflow-x: hidden;
     background-color: #525d64;
     flex: 1;
     height: 100%;
     border-right: 1px solid black;
+    padding-left: 10px;
 }
 
 #sidebarRight {
     display: flex;
+    flex-direction: column;
     float: right;
+    overflow-y: scroll;
+    overflow-x: hidden;
     background-color: #525d64;
     flex: 1;
     height: 100%;
     border-left: 1px solid black;
+    padding-right: 10px;
 }
 
 
@@ -163,11 +172,21 @@ html {
     margin-bottom: 10px;
 }
 
-input {
+input, .inputRowBtns {
     border-radius: 5px;
     border: 1px solid black;
     outline: none;
     height: 20px;
+    background-color: #515358;
+    color: white;
+}
+
+input:hover, .inputRowBtns:hover {
+    background-color: #393b40;
+}
+
+input:active, .inputRowBtns:active {
+    background-color: #525d64;
 }
 
 input[type="text"] {
@@ -178,4 +197,25 @@ input[type="text"] {
     margin-bottom: 5px;
     display: flex;
     flex-direction: row;
+}
+
+details, summary {
+    cursor: default;
+    user-select: none;
+    margin-left: -20px;
+    padding-left: 20px;
+    cursor: default;
+    color: white;
+}
+
+summary:hover {
+    background-color: #393b40;
+}
+
+#animCodeEditor {
+    width: 100%;
+    height: 100%;
+    resize: none;
+    outline: none;
+    margin-right: 10px;
 }
