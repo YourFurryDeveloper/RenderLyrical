@@ -71,7 +71,29 @@
             </div>
 
             <div id="keyframeEditor">
+                <div style="display: flex; flex-direction: column; width: 100%; height: fit-content;">
+                    <div id="keyframeControls">
+                        <button class="keyframeControlBtns" style="border-top-right-radius: 0px; border-bottom-right-radius: 0px;">◀◀</button>
+                        <!--<button class="keyframeControlBtns" style="border-radius: 0px; padding-left: 7px; padding-right: 7px;">■</button>-->
+                        <button class="keyframeControlBtns" style="border-radius: 0px; padding-left: 7px; padding-right: 7px;">▶</button>
+                        <button class="keyframeControlBtns" style="border-top-left-radius: 0px; border-bottom-left-radius: 0px;">▶▶</button>
 
+                        <div class="keyframeInputLabelCombo" style="position: absolute; right: 10px;">
+                            <label class="keyframeControlLabel" for="timestampSelector" style="left: 55px;">Cursor</label>
+                            <input id="cursorPosInput" type="number" name="timestampSelector" class="keyframeRowNumberInput" style="padding-left: 65px;">
+                        </div>
+                    </div>
+
+                    <div id="keyframeNumbers">
+                        <p id="secondsDisplay">1</p>
+                    </div>
+                </div>
+
+                <div id="keyframeArea">
+                    <div id="playhead">
+                        <div id="playhead_head"></div>
+                    </div>
+                </div>
             </div>
         </div>
 

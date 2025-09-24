@@ -1,4 +1,4 @@
-createToolbar(35, "#242424", "#5c5c5c", "#2a3638", "white", "white", 7, "pointer", {"File":{"Open":"openEditMenu", "Save":"openFileMenu"}, "Edit":{"Copy":"openEditMenu", "Paste":"openFileMenu"}, "Tools":{"Delete CoAI":"deleteMsAI", "Pen":"ShowPenTool"}});
+createToolbar(35, "#242424", "#5c5c5c", "#2a3638", "white", "white", 7, "pointer", {"File":{"Open":"openEditMenu", "Save":"openFileMenu"}, "Edit":{"Copy":"openEditMenu", "Paste":"openFileMenu"}});
 
 let projJsonFile = {
     "projConf": {
@@ -132,4 +132,28 @@ document.getElementById("animCodeEditor").addEventListener("input", function() {
     animCodeEditor = document.getElementById("animCodeEditor");
 
     projJsonFile.objects[animCodeEditor.name]["keyframes"] = animCodeEditor.value;
+})
+
+let playheadToCursor = false;
+document.getElementById("playhead_head").addEventListener("mousedown", function() {
+    console.log("playhead down")
+    playheadToCursor = true;
+})
+
+document.getElementById("playhead_head").addEventListener("mouseup", function() {
+    playheadToCursor = false;
+})
+
+document.getElementById("playhead_head").addEventListener("mousemove", function(e) {
+    playhead = document.getElementById("playhead");
+    if (playheadToCursor) {
+        playhead.style.left = e.clientX + "px";
+        document.getElementById("cursorPosInput").value = playhead.style.left.slice(0, playhead.style.left.length - 2) / 100;
+    }
+})
+
+document.getElementById("cursorPosInput").addEventListener("input", function() {
+    const playhead = document.getElementById("playhead");
+    const cursorPos = document.getElementById("cursorPosInput").value;
+    playhead.style.left = cursorPos + 10 + "px";
 })
