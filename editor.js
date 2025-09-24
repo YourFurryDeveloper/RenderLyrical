@@ -117,7 +117,7 @@ function refreshPreviewObject(previewObjId) {
 }
 
 function loadObjectData(objId) {
-    document.getElementById("animCodeEditor").innerHTML = projJsonFile.objects[objId]["keyframes"];
+    document.getElementById("animCodeEditor").value = projJsonFile.objects[objId]["keyframes"];
     document.getElementById("animCodeEditor").name = objId;
 }
 
