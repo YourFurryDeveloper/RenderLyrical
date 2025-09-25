@@ -106,6 +106,7 @@ html {
 
 #keyframeEditor {
     display: flex;
+    flex-direction: column;
     float: bottom;
     background-color: #393b40;
     position: absolute;
@@ -254,7 +255,7 @@ summary:hover {
 #keyframeControls {
     width: 100%;
     height: 25px;
-    border-bottom: 1px solid black;
+    border-top: 1px solid black;
     background-color: #1E1E1E;
     display: flex;
     justify-content: center;
@@ -272,6 +273,7 @@ summary:hover {
     color: white;
     margin: 1px;
     font-size: 11px;
+    margin-bottom: 3px;
 }
 
 .keyframeControlBtns:hover {
@@ -299,23 +301,30 @@ summary:hover {
 }
 
 #keyframeNumbers {
-    width: 100%;
     height: 20px;
     border-bottom: 1px solid black;
     display: flex;
     align-items: center;
+    /*position: absolute;
+    top: 0;*/
 }
 
-#secondsDisplay {
+.secondsDisplay {
     font-size: 14px;
     color: lightgray;
-    margin-left: 10px;
+}
+
+#secondsDisplayNot0 {
+    top: 0;
+    margin-left: 90px;
 }
 
 #keyframeArea {
-    position: absolute;
-    top: 27px;
-    bottom: 0;
+    /*top: 27px;
+    bottom: 0;*/
+    height: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
 }
 
 #playhead, #playhead_head {
@@ -323,12 +332,13 @@ summary:hover {
 }
 
 #playhead {
-    position: absolute;
-    left: 10px;
+    position: relative;
+    left: 0px;
     width: 5px;
     height: 100%;
     display: flex;
     justify-content: center;
+    z-index: 1000;
 }
 
 #playhead_head {
@@ -338,4 +348,20 @@ summary:hover {
     height: 20px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+}
+
+#keyframeRow {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    top: -100px;
+    width: 100%;
+}
+
+.keyframe {
+    position: absolute;
+    width: 10px;
+    height: 15px;
+    border-radius: 10px;
+    background-color: chocolate;
 }

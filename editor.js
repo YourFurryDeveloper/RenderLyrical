@@ -11,6 +11,8 @@ let projJsonFile = {
 };
 
 
+let curSelectedObject_Id = "";
+
 function createObject() {
     let previewAreaFrame = document.getElementById("animPreview");
     let previewArea = previewAreaFrame.contentDocument || previewAreaFrame.contentWindow.document;
@@ -69,6 +71,7 @@ function createObject() {
     document.querySelectorAll(".objectDropdown").forEach(dropdown => {
         dropdown.addEventListener("toggle", function () {
             if (this.open) {
+                curSelectedObject_Id = this.id;
                 loadObjectData(this.id);
                 // Close all other dropdowns
                 document.querySelectorAll(".objectDropdown").forEach(otherDropdown => {
@@ -117,10 +120,45 @@ function refreshPreviewObject(previewObjId) {
 }
 
 function loadObjectData(objId) {
-    document.getElementById("animCodeEditor").value = projJsonFile.objects[objId]["keyframes"];
+    const keyframeRow = document.getElementById("keyframeRow");
+    keyframeRow.innerHTML = "";
+
+    document.getElementById("animCodeEditor").value = projJsonFile.objects[objId].keyframes;
     document.getElementById("animCodeEditor").name = objId;
+
+    Object.values(projJsonFile.objects[curSelectedObject_Id].keyframes).forEach(keyframe => {
+        let newKeyframe = document.createElement("div");
+        newKeyframe.className = "keyframe";
+        newKeyframe.style.left = keyframe.position;
+        keyframeRow.appendChild(newKeyframe);
+    });
 }
 
+function addKeyframe() {
+    const playhead = document.getElementById("playhead");
+    const keyframeRow = document.getElementById("keyframeRow");
+    
+    let newKeyframe = document.createElement("div");
+    newKeyframe.className = "keyframe";
+    newKeyframe.style.left = playhead.style.left;
+    keyframeRow.appendChild(newKeyframe);
+
+
+    if (Object.keys(projJsonFile.objects[curSelectedObject_Id].keyframes).length === 0) {
+        projJsonFile.objects[curSelectedObject_Id].keyframes[1] = {
+            "position": playhead.style.left,
+            "cssProperties": ""
+        }
+    } else {
+        projJsonFile.objects[curSelectedObject_Id].keyframes[Object.keys(projJsonFile.objects[curSelectedObject_Id].keyframes).length + 1] = {
+            "position": playhead.style.left,
+            "cssProperties": ""
+        }
+    }
+}
+
+
+// ========================================
 
 document.getElementById("fontselector").addEventListener("change", function() {
     if (document.getElementById("fontselector").value !== "nullFont") {
@@ -155,5 +193,25 @@ document.getElementById("playhead_head").addEventListener("mousemove", function(
 document.getElementById("cursorPosInput").addEventListener("input", function() {
     const playhead = document.getElementById("playhead");
     const cursorPos = document.getElementById("cursorPosInput").value;
-    playhead.style.left = cursorPos + 10 + "px";
+    playhead.style.left = parseFloat(cursorPos) * 100 + "px";
+})
+
+document.getElementById("animEndInput").addEventListener("input", function() {
+    const animEnd = document.getElementById("animEndInput").value;
+    const secondCounterContainer = document.getElementById("keyframeNumbers");
+    secondCounterContainer.innerHTML = "";
+
+    let newSecondCounter = document.createElement("p");
+    newSecondCounter.className = "secondsDisplay";
+    newSecondCounter.textContent = "0";
+    document.getElementById("keyframeNumbers").appendChild(newSecondCounter);
+
+    for (i = 0; i < animEnd; i++) {
+        let newSecondCounter = document.createElement("p");
+        newSecondCounter.className = "secondsDisplay";
+        newSecondCounter.id = "secondsDisplayNot0";
+        newSecondCounter.textContent = i + 1;
+        document.getElementById("keyframeNumbers").appendChild(newSecondCounter);
+    }
+    
 })

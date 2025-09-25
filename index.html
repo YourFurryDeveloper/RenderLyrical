@@ -55,6 +55,7 @@
                             <input id="fontSizeInput" type="number" placeholder="Font size" style="width: 30%; height: 21px;">
                         </div>
 
+
                         <div class="inputRow">
                             <input id="objColorInput" type="color" placeholder="Object Color" style="width: 100%; margin-right: 5px; height: 24px;">
                             <input id="objIdInput" type="text" placeholder="Object ID" style="width: 100%; margin-right: 5px;">
@@ -73,25 +74,57 @@
             <div id="keyframeEditor">
                 <div style="display: flex; flex-direction: column; width: 100%; height: fit-content;">
                     <div id="keyframeControls">
-                        <button class="keyframeControlBtns" style="border-top-right-radius: 0px; border-bottom-right-radius: 0px;">◀◀</button>
+                        <button class="keyframeControlBtns" style="padding-left: 7px; padding-right: 7px;" onclick="addKeyframe()">◆</button>
+
+                        <button class="keyframeControlBtns" style="border-top-right-radius: 0px; border-bottom-right-radius: 0px; margin-left: 50px;">◆◀</button>
                         <!--<button class="keyframeControlBtns" style="border-radius: 0px; padding-left: 7px; padding-right: 7px;">■</button>-->
                         <button class="keyframeControlBtns" style="border-radius: 0px; padding-left: 7px; padding-right: 7px;">▶</button>
-                        <button class="keyframeControlBtns" style="border-top-left-radius: 0px; border-bottom-left-radius: 0px;">▶▶</button>
+                        <button class="keyframeControlBtns" style="border-top-left-radius: 0px; border-bottom-left-radius: 0px; margin-right: 70px;">▶◆</button>
 
-                        <div class="keyframeInputLabelCombo" style="position: absolute; right: 10px;">
-                            <label class="keyframeControlLabel" for="timestampSelector" style="left: 55px;">Cursor</label>
-                            <input id="cursorPosInput" type="number" name="timestampSelector" class="keyframeRowNumberInput" style="padding-left: 65px;">
+                        <div style="display: flex; align-items: center; justify-content: center; position: absolute; right: 10px;">
+                            <div class="keyframeInputLabelCombo">
+                                <label class="keyframeControlLabel" for="timestampSelector" style="left: 55px;">Cursor</label>
+                                <input id="cursorPosInput" type="number" name="timestampSelector" class="keyframeRowNumberInput" style="padding-left: 65px;" value="0">
+                            </div>
+
+                            <div class="keyframeInputLabelCombo">
+                                <label class="keyframeControlLabel" for="animEndInput" style="left: 40px;">End</label>
+                                <input id="animEndInput" type="number" name="animEndInput" class="keyframeRowNumberInput" style="padding-left: 50px;" value="20">
+                            </div>
                         </div>
-                    </div>
-
-                    <div id="keyframeNumbers">
-                        <p id="secondsDisplay">1</p>
                     </div>
                 </div>
 
                 <div id="keyframeArea">
+                    <div id="keyframeNumbers">
+                        <p class="secondsDisplay">0</p>
+                        <p class="secondsDisplay" id="secondsDisplayNot0">1</p>
+                        <p class="secondsDisplay" id="secondsDisplayNot0">2</p>
+                        <p class="secondsDisplay" id="secondsDisplayNot0">3</p>
+                        <p class="secondsDisplay" id="secondsDisplayNot0">4</p>
+                        <p class="secondsDisplay" id="secondsDisplayNot0">5</p>
+                        <p class="secondsDisplay" id="secondsDisplayNot0">6</p>
+                        <p class="secondsDisplay" id="secondsDisplayNot0">7</p>
+                        <p class="secondsDisplay" id="secondsDisplayNot0">8</p>
+                        <p class="secondsDisplay" id="secondsDisplayNot0">9</p>
+                        <p class="secondsDisplay" id="secondsDisplayNot0">10</p>
+                        <p class="secondsDisplay" id="secondsDisplayNot0">11</p>
+                        <p class="secondsDisplay" id="secondsDisplayNot0">12</p>
+                        <p class="secondsDisplay" id="secondsDisplayNot0">13</p>
+                        <p class="secondsDisplay" id="secondsDisplayNot0">14</p>
+                        <p class="secondsDisplay" id="secondsDisplayNot0">15</p>
+                        <p class="secondsDisplay" id="secondsDisplayNot0">16</p>
+                        <p class="secondsDisplay" id="secondsDisplayNot0">17</p>
+                        <p class="secondsDisplay" id="secondsDisplayNot0">18</p>
+                        <p class="secondsDisplay" id="secondsDisplayNot0">19</p>
+                        <p class="secondsDisplay" id="secondsDisplayNot0">20</p>
+                    </div>
+
                     <div id="playhead">
                         <div id="playhead_head"></div>
+                    </div>
+
+                    <div id="keyframeRow">
                     </div>
                 </div>
             </div>
