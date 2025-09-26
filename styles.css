@@ -365,3 +365,7 @@ summary:hover {
     border-radius: 10px;
     background-color: chocolate;
 }
+
+.keyframeActive {
+    background-color: rgb(237, 253, 64);
+}

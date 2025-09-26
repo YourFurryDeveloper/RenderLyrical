@@ -123,14 +123,22 @@ function loadObjectData(objId) {
     const keyframeRow = document.getElementById("keyframeRow");
     keyframeRow.innerHTML = "";
 
-    document.getElementById("animCodeEditor").value = projJsonFile.objects[objId].keyframes;
-    document.getElementById("animCodeEditor").name = objId;
-
     Object.values(projJsonFile.objects[curSelectedObject_Id].keyframes).forEach(keyframe => {
         let newKeyframe = document.createElement("div");
         newKeyframe.className = "keyframe";
         newKeyframe.style.left = keyframe.position;
+        newKeyframe.name = keyframe.keyName;
         keyframeRow.appendChild(newKeyframe);
+
+        newKeyframe.addEventListener("click", function() {
+            document.querySelectorAll(".keyframe").forEach(keyframe => {
+                keyframe.classList.remove("keyframeActive");
+            })
+
+            document.getElementById("animCodeEditor").value = projJsonFile.objects[curSelectedObject_Id].keyframes[newKeyframe.name].cssProperties;
+            newKeyframe.classList.add("keyframeActive");
+            document.getElementById("animCodeEditor").name = keyframe.keyName;
+        })
     });
 }
 
@@ -141,20 +149,34 @@ function addKeyframe() {
     let newKeyframe = document.createElement("div");
     newKeyframe.className = "keyframe";
     newKeyframe.style.left = playhead.style.left;
-    keyframeRow.appendChild(newKeyframe);
 
 
     if (Object.keys(projJsonFile.objects[curSelectedObject_Id].keyframes).length === 0) {
+        newKeyframe.name = 1;
         projJsonFile.objects[curSelectedObject_Id].keyframes[1] = {
             "position": playhead.style.left,
-            "cssProperties": ""
+            "cssProperties": "",
+            "keyName": Object.keys(projJsonFile.objects[curSelectedObject_Id].keyframes).length + 1
         }
     } else {
+        newKeyframe.name = Object.keys(projJsonFile.objects[curSelectedObject_Id].keyframes).length + 1;
         projJsonFile.objects[curSelectedObject_Id].keyframes[Object.keys(projJsonFile.objects[curSelectedObject_Id].keyframes).length + 1] = {
             "position": playhead.style.left,
-            "cssProperties": ""
+            "cssProperties": "",
+            "keyName": Object.keys(projJsonFile.objects[curSelectedObject_Id].keyframes).length + 1
         }
     }
+
+    keyframeRow.appendChild(newKeyframe);
+
+    newKeyframe.addEventListener("click", function() {
+        document.querySelectorAll(".keyframe").forEach(keyframe => {
+            keyframe.classList.remove("keyframeActive");
+        })
+
+        document.getElementById("animCodeEditor").value = projJsonFile.objects[curSelectedObject_Id].keyframes[newKeyframe.name].cssProperties;
+        newKeyframe.classList.add("keyframeActive");
+    })
 }
 
 
@@ -169,7 +191,7 @@ document.getElementById("fontselector").addEventListener("change", function() {
 document.getElementById("animCodeEditor").addEventListener("input", function() {
     animCodeEditor = document.getElementById("animCodeEditor");
 
-    projJsonFile.objects[animCodeEditor.name]["keyframes"] = animCodeEditor.value;
+    projJsonFile.objects[curSelectedObject_Id].keyframes[animCodeEditor.name].cssProperties = animCodeEditor.value;
 })
 
 let playheadToCursor = false;
