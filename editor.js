@@ -203,13 +203,15 @@ function loadObjectData(objId) {
                 keyframe.classList.remove("keyframeActive");
             })
 
+            curSelectedKeyframe_Name = newKeyframe.name;
+
             let previewAreaFrame = document.getElementById("animPreview");
             let previewArea = previewAreaFrame.contentDocument || previewAreaFrame.contentWindow.document;
 
             document.getElementById("animCodeEditor").value = projJsonFile.objects[curSelectedObject_Id].keyframes[newKeyframe.name].cssProperties;
             document.getElementById("animCodeEditor").name = newKeyframe.name;
             //previewArea.getElementById(keyframe.parent).style = previewArea.getElementById(keyframe.parent).style + keyframe.cssProperties;
-            previewArea.getElementById(projJsonFile.objects[curSelectedObject_Id].keyframes[newKeyframe.name].parent).style = previewArea.getElementById(projJsonFile.objects[curSelectedObject_Id].keyframes[newKeyframe.name].parent).style + projJsonFile.objects[curSelectedObject_Id].keyframes[newKeyframe.name].cssProperties;
+            previewArea.getElementById(curSelectedObject_Id).style = previewArea.getElementById(curSelectedObject_Id).style + projJsonFile.objects[curSelectedObject_Id].keyframes[newKeyframe.name].cssProperties;
             newKeyframe.classList.add("keyframeActive");
         })
     });
@@ -249,12 +251,14 @@ function addKeyframe() {
             keyframe.classList.remove("keyframeActive");
         })
 
+        curSelectedKeyframe_Name = newKeyframe.name;
+
         let previewAreaFrame = document.getElementById("animPreview");
         let previewArea = previewAreaFrame.contentDocument || previewAreaFrame.contentWindow.document;
 
         document.getElementById("animCodeEditor").value = projJsonFile.objects[curSelectedObject_Id].keyframes[newKeyframe.name].cssProperties;
         document.getElementById("animCodeEditor").name = newKeyframe.name;
-        previewArea.getElementById(projJsonFile.objects[curSelectedObject_Id].keyframes[newKeyframe.name].parent).style = previewArea.getElementById(projJsonFile.objects[curSelectedObject_Id].keyframes[newKeyframe.name].parent).style + projJsonFile.objects[curSelectedObject_Id].keyframes[newKeyframe.name].cssProperties;
+        previewArea.getElementById(curSelectedObject_Id).style = previewArea.getElementById(curSelectedObject_Id).style + projJsonFile.objects[curSelectedObject_Id].keyframes[newKeyframe.name].cssProperties;
         newKeyframe.classList.add("keyframeActive");
     })
 }

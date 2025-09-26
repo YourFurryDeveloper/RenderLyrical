@@ -7,7 +7,11 @@ document.getElementById("fontselector").addEventListener("change", function() {
 document.getElementById("animCodeEditor").addEventListener("input", function() {
     animCodeEditor = document.getElementById("animCodeEditor");
 
+    let previewAreaFrame = document.getElementById("animPreview");
+    let previewArea = previewAreaFrame.contentDocument || previewAreaFrame.contentWindow.document;
+
     projJsonFile.objects[curSelectedObject_Id].keyframes[animCodeEditor.name].cssProperties = animCodeEditor.value;
+    previewArea.getElementById(curSelectedObject_Id).style = previewArea.getElementById(curSelectedObject_Id).style + projJsonFile.objects[curSelectedObject_Id].keyframes[curSelectedKeyframe_Name].cssProperties;
 })
 
 let playheadToCursor = false;
