@@ -12,6 +12,7 @@ let projJsonFile = {
 
 
 let curSelectedObject_Id = "";
+let curSelectedKeyframe_Name = "";
 
 function createObject() {
     let previewAreaFrame = document.getElementById("animPreview");
@@ -50,6 +51,9 @@ function createObject() {
 
     let objectTextEditor = document.createElement("input");
     let objectColorEditor = document.createElement("input");
+    let objectFontEditor = document.createElement("select");
+    let objectFontSizeEditor = document.createElement("input");
+    let objectTimingFunctionEditor = document.createElement("select");
     objectTextEditor.type = "text";
     objectTextEditor.style.marginLeft = "20px";
     objectTextEditor.style.marginBottom = "7px";
@@ -58,11 +62,59 @@ function createObject() {
 
     objectColorEditor.type = "color";
     objectColorEditor.style.marginLeft = "20px";
+    objectColorEditor.style.marginBottom = "7px";
     objectColorEditor.style.width = "70%";
     objectColorEditor.value = objectTextColor.value;
 
+    objectFontEditor.innerHTML = `<option value="Arial" style="font-family: Arial;">Arial</option>
+                                <option value="Verdana, Geneva, Tahoma, sans-serif" style="font-family: Verdana;">Verdana</option>
+                                <option value="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" style="font-family: Tahoma;">Tahoma</option>
+                                <option value="'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif" style="font-family: 'Trebuchet MS';">Trebuchet MS</option>
+                                <option value="'Times New Roman'" style="font-family: 'Times New Roman';">Times New Roman</option>
+                                <option value="Georgia, 'Times New Roman', Times, serif" style="font-family: Georgia;">Georgia</option>
+                                <option value="Garamond" style="font-family: Garamond;">Garamond</option>
+                                <option value="'Courier New'" style="font-family: 'Courier New';">Courier New</option>
+                                <option value="'Brush Script MT'" style="font-family: 'Brush Script MT';">Brush Script MT</option>
+                                <option value="Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif" style="font-family: Impact;">Impact</option>
+                                <option value="'Comic Sans MS'" style="font-family: 'Comic Sans MS';">Comic Sans MS</option>
+                                <option value="'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif" style="font-family: 'Lucida Console';">Lucida Console</option>
+                                <option value="'Palatino Linotype'" style="font-family: 'Palatino Linotype';">Palatino Linotype</option>
+                                <option value="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" style="font-family: 'Segoe UI';">Segoe UI</option>
+                                <option value="Optima" style="font-family: Optima;">Optima</option>`;
+    objectFontEditor.style.width = "70%";
+    objectFontEditor.style.marginLeft = "20px";
+    objectFontEditor.style.marginBottom = "7px";
+    objectFontEditor.className = "inputRowBtns";
+    objectFontEditor.style.height = "25px";
+    objectFontEditor.value = objectFont.value;
+
+    objectFontSizeEditor.type = "number";
+    objectFontSizeEditor.style.marginLeft = "20px";
+    objectFontSizeEditor.style.marginBottom = "15px";
+    objectFontSizeEditor.style.width = "70%";
+    objectFontSizeEditor.value = objectFontSize.value;
+
+    objectTimingFunctionEditor.innerHTML = `
+                                <option value="ease">Ease</option>
+                                <option value="ease-in">Ease-in</option>
+                                <option value="ease-out">Ease-out</option>
+                                <option value="ease-in-out">Ease-in-out</option>
+                                <option value="linear">Linear</option>
+                                <option value="step-start">Step-start</option>
+                                <option value="step-end">Step-end</option>`;
+    objectTimingFunctionEditor.style.width = "70%";
+    objectTimingFunctionEditor.style.marginLeft = "20px";
+    objectTimingFunctionEditor.style.marginBottom = "7px";
+    objectTimingFunctionEditor.className = "inputRowBtns";
+    objectTimingFunctionEditor.style.height = "25px";
+    objectTimingFunctionEditor.value = "ease";
+
+
     newObjectDropdown.appendChild(objectTextEditor);
     newObjectDropdown.appendChild(objectColorEditor);
+    newObjectDropdown.appendChild(objectFontEditor);
+    newObjectDropdown.appendChild(objectFontSizeEditor);
+    newObjectDropdown.appendChild(objectTimingFunctionEditor);
 
 
     newObjectDropdown.appendChild(newObjectDropdownName);
@@ -88,6 +140,7 @@ function createObject() {
         "font": objectFont.value,
         "fontSize": objectFontSize.value,
         "color": objectTextColor.value,
+        "timingFunction": "ease",
 
         "keyframes": {
         }
@@ -101,6 +154,21 @@ function createObject() {
 
     objectColorEditor.addEventListener("change", function() {
         projJsonFile.objects[newTxtObject.id]["color"] = objectColorEditor.value;
+        refreshPreviewObject(newTxtObject.id);
+    })
+
+    objectFontEditor.addEventListener("change", function() {
+        projJsonFile.objects[newTxtObject.id]["font"] = objectFontEditor.value;
+        refreshPreviewObject(newTxtObject.id);
+    })
+
+    objectFontSizeEditor.addEventListener("change", function() {
+        projJsonFile.objects[newTxtObject.id]["fontSize"] = objectFontSizeEditor.value;
+        refreshPreviewObject(newTxtObject.id);
+    })
+
+    objectTimingFunctionEditor.addEventListener("change", function() {
+        projJsonFile.objects[newTxtObject.id]["timingFunction"] = objectTimingFunctionEditor.value;
         refreshPreviewObject(newTxtObject.id);
     })
 
@@ -135,9 +203,14 @@ function loadObjectData(objId) {
                 keyframe.classList.remove("keyframeActive");
             })
 
+            let previewAreaFrame = document.getElementById("animPreview");
+            let previewArea = previewAreaFrame.contentDocument || previewAreaFrame.contentWindow.document;
+
             document.getElementById("animCodeEditor").value = projJsonFile.objects[curSelectedObject_Id].keyframes[newKeyframe.name].cssProperties;
+            document.getElementById("animCodeEditor").name = newKeyframe.name;
+            //previewArea.getElementById(keyframe.parent).style = previewArea.getElementById(keyframe.parent).style + keyframe.cssProperties;
+            previewArea.getElementById(projJsonFile.objects[curSelectedObject_Id].keyframes[newKeyframe.name].parent).style = previewArea.getElementById(projJsonFile.objects[curSelectedObject_Id].keyframes[newKeyframe.name].parent).style + projJsonFile.objects[curSelectedObject_Id].keyframes[newKeyframe.name].cssProperties;
             newKeyframe.classList.add("keyframeActive");
-            document.getElementById("animCodeEditor").name = keyframe.keyName;
         })
     });
 }
@@ -156,14 +229,16 @@ function addKeyframe() {
         projJsonFile.objects[curSelectedObject_Id].keyframes[1] = {
             "position": playhead.style.left,
             "cssProperties": "",
-            "keyName": Object.keys(projJsonFile.objects[curSelectedObject_Id].keyframes).length + 1
+            "keyName": Object.keys(projJsonFile.objects[curSelectedObject_Id].keyframes).length + 1,
+            "parent": curSelectedObject_Id
         }
     } else {
         newKeyframe.name = Object.keys(projJsonFile.objects[curSelectedObject_Id].keyframes).length + 1;
         projJsonFile.objects[curSelectedObject_Id].keyframes[Object.keys(projJsonFile.objects[curSelectedObject_Id].keyframes).length + 1] = {
             "position": playhead.style.left,
             "cssProperties": "",
-            "keyName": Object.keys(projJsonFile.objects[curSelectedObject_Id].keyframes).length + 1
+            "keyName": Object.keys(projJsonFile.objects[curSelectedObject_Id].keyframes).length + 1,
+            "parent": curSelectedObject_Id
         }
     }
 
@@ -174,66 +249,28 @@ function addKeyframe() {
             keyframe.classList.remove("keyframeActive");
         })
 
+        let previewAreaFrame = document.getElementById("animPreview");
+        let previewArea = previewAreaFrame.contentDocument || previewAreaFrame.contentWindow.document;
+
         document.getElementById("animCodeEditor").value = projJsonFile.objects[curSelectedObject_Id].keyframes[newKeyframe.name].cssProperties;
+        document.getElementById("animCodeEditor").name = newKeyframe.name;
+        previewArea.getElementById(projJsonFile.objects[curSelectedObject_Id].keyframes[newKeyframe.name].parent).style = previewArea.getElementById(projJsonFile.objects[curSelectedObject_Id].keyframes[newKeyframe.name].parent).style + projJsonFile.objects[curSelectedObject_Id].keyframes[newKeyframe.name].cssProperties;
         newKeyframe.classList.add("keyframeActive");
     })
 }
 
+let animPlaying = false;
+function previewAnim() {
+    playBtn = document.getElementById("animPlayPauseBtn");
+
+    if (!animPlaying) {
+        playBtn.textContent = "■";
+        animPlaying = true;
+    } else {
+        playBtn.textContent = "▶";
+        animPlaying = false;
+    }
+}
+
 
 // ========================================
-
-document.getElementById("fontselector").addEventListener("change", function() {
-    if (document.getElementById("fontselector").value !== "nullFont") {
-        document.getElementById("fontselector").style.fontFamily = document.getElementById("fontselector").value;
-    }
-})
-
-document.getElementById("animCodeEditor").addEventListener("input", function() {
-    animCodeEditor = document.getElementById("animCodeEditor");
-
-    projJsonFile.objects[curSelectedObject_Id].keyframes[animCodeEditor.name].cssProperties = animCodeEditor.value;
-})
-
-let playheadToCursor = false;
-document.getElementById("playhead_head").addEventListener("mousedown", function() {
-    console.log("playhead down")
-    playheadToCursor = true;
-})
-
-document.getElementById("playhead_head").addEventListener("mouseup", function() {
-    playheadToCursor = false;
-})
-
-document.getElementById("playhead_head").addEventListener("mousemove", function(e) {
-    playhead = document.getElementById("playhead");
-    if (playheadToCursor) {
-        playhead.style.left = e.clientX + "px";
-        document.getElementById("cursorPosInput").value = playhead.style.left.slice(0, playhead.style.left.length - 2) / 100;
-    }
-})
-
-document.getElementById("cursorPosInput").addEventListener("input", function() {
-    const playhead = document.getElementById("playhead");
-    const cursorPos = document.getElementById("cursorPosInput").value;
-    playhead.style.left = parseFloat(cursorPos) * 100 + "px";
-})
-
-document.getElementById("animEndInput").addEventListener("input", function() {
-    const animEnd = document.getElementById("animEndInput").value;
-    const secondCounterContainer = document.getElementById("keyframeNumbers");
-    secondCounterContainer.innerHTML = "";
-
-    let newSecondCounter = document.createElement("p");
-    newSecondCounter.className = "secondsDisplay";
-    newSecondCounter.textContent = "0";
-    document.getElementById("keyframeNumbers").appendChild(newSecondCounter);
-
-    for (i = 0; i < animEnd; i++) {
-        let newSecondCounter = document.createElement("p");
-        newSecondCounter.className = "secondsDisplay";
-        newSecondCounter.id = "secondsDisplayNot0";
-        newSecondCounter.textContent = i + 1;
-        document.getElementById("keyframeNumbers").appendChild(newSecondCounter);
-    }
-    
-})
