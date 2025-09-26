@@ -141,6 +141,7 @@ function createObject() {
         "fontSize": objectFontSize.value,
         "color": objectTextColor.value,
         "timingFunction": "ease",
+        "animationDuration": 0,
 
         "keyframes": {
         }
@@ -230,17 +231,34 @@ function addKeyframe() {
         newKeyframe.name = 1;
         projJsonFile.objects[curSelectedObject_Id].keyframes[1] = {
             "position": playhead.style.left,
+            "position_secs": playhead.style.left.slice(0, playhead.style.left.length - 2) / 100,
             "cssProperties": "",
             "keyName": Object.keys(projJsonFile.objects[curSelectedObject_Id].keyframes).length + 1,
-            "parent": curSelectedObject_Id
+            "parent": curSelectedObject_Id,
         }
     } else {
-        newKeyframe.name = Object.keys(projJsonFile.objects[curSelectedObject_Id].keyframes).length + 1;
-        projJsonFile.objects[curSelectedObject_Id].keyframes[Object.keys(projJsonFile.objects[curSelectedObject_Id].keyframes).length + 1] = {
-            "position": playhead.style.left,
-            "cssProperties": "",
-            "keyName": Object.keys(projJsonFile.objects[curSelectedObject_Id].keyframes).length + 1,
-            "parent": curSelectedObject_Id
+        if (Object.keys(projJsonFile.objects[curSelectedObject_Id].keyframes).length < 2) {
+            newKeyframe.name = Object.keys(projJsonFile.objects[curSelectedObject_Id].keyframes).length + 1;
+            projJsonFile.objects[curSelectedObject_Id].keyframes[Object.keys(projJsonFile.objects[curSelectedObject_Id].keyframes).length + 1] = {
+                "position": playhead.style.left,
+                "cssProperties": "",
+                "keyName": Object.keys(projJsonFile.objects[curSelectedObject_Id].keyframes).length + 1,
+                "parent": curSelectedObject_Id,
+            }
+
+            let duration = playhead.style.left.slice(0, playhead.style.left.length - 2) - projJsonFile.objects[curSelectedObject_Id].keyframes[1].position.slice(0, projJsonFile.objects[curSelectedObject_Id].keyframes[1].position.length - 2);
+            projJsonFile.objects[curSelectedObject_Id].animationDuration = duration / 100;
+        } else {
+            newKeyframe.name = Object.keys(projJsonFile.objects[curSelectedObject_Id].keyframes).length + 1;
+            projJsonFile.objects[curSelectedObject_Id].keyframes[Object.keys(projJsonFile.objects[curSelectedObject_Id].keyframes).length + 1] = {
+                "position": playhead.style.left,
+                "cssProperties": "",
+                "keyName": Object.keys(projJsonFile.objects[curSelectedObject_Id].keyframes).length + 1,
+                "parent": curSelectedObject_Id,
+            }
+            
+            let duration = playhead.style.left.slice(0, playhead.style.left.length - 2) - projJsonFile.objects[curSelectedObject_Id].keyframes[1].position.slice(0, projJsonFile.objects[curSelectedObject_Id].keyframes[1].position.length - 2);
+            projJsonFile.objects[curSelectedObject_Id].animationDuration = duration / 100;
         }
     }
 
