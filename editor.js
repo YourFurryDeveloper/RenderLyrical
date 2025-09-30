@@ -269,18 +269,5 @@ function addKeyframe() {
     })
 }
 
-let animPlaying = false;
-function previewAnim() {
-    playBtn = document.getElementById("animPlayPauseBtn");
-
-    if (!animPlaying) {
-        playBtn.textContent = "■";
-        animPlaying = true;
-    } else {
-        playBtn.textContent = "▶";
-        animPlaying = false;
-    }
-}
-
 
 // ========================================
