@@ -10,7 +10,6 @@ let projJsonFile = {
     }
 };
 
-
 let curSelectedObject_Id = "";
 let curSelectedKeyframe_Name = "";
 
@@ -268,6 +267,7 @@ function addKeyframe() {
         newKeyframe.classList.add("keyframeActive");
     })
 }
+
 
 
 // ========================================

@@ -3,6 +3,10 @@ let animJS = "";
 
 let animPlaying = false;
 
+let allKeyframes = ``;
+let allJsTimes = ``;
+let allCssKeyframeDefs = ``;
+
 function previewAnim() {
     playBtn = document.getElementById("animPlayPauseBtn");
     renderInfoPopup = document.getElementById("compilerInfoPopup");
@@ -15,22 +19,34 @@ function previewAnim() {
 
         let curKeyframeProgress = 0;
 
-        let allKeyframes = ``;
-        Object.keys(projJsonFile).forEach(sceneObject => {
-            Object.keys(projJsonFile[sceneObject].keyframes).forEach(keyframe => {
+        Object.keys(projJsonFile.objects).forEach(sceneObject => {
+            allKeyframes = ``;
+            allJsTimes = ``;
+            curKeyframeProgress = 0;
+            Object.keys(projJsonFile.objects[sceneObject].keyframes).forEach(keyframe => {
                 curKeyframeProgress += 1;
-                let rawKeyframeProgress = curKeyframeProgress / Object.keys(projJsonFile[sceneObject].keyframes);
+                let rawKeyframeProgress = curKeyframeProgress / Object.keys(projJsonFile.objects[sceneObject].keyframes).length;
                 renderProgressBar.value = rawKeyframeProgress * 100;
 
-                let newKeyframePercent = keyframe.positionSecs - projJsonFile[sceneObject].keyframes[1].positionSecs;
+                let newKeyframePercent = keyframe.positionSecs - projJsonFile.objects[sceneObject].keyframes[1].positionSecs;
                 newKeyframePercent = newKeyframePercent / sceneObject.animationDuration;
+
+                if (keyframe === "1") {
+                    let newJsTime = `
+                    setTimeout(function() {
+                        
+                    }, ${keyframe.positionSecs});
+
+                    `;
+                    allJsTimes += newJsTime;
+                }
 
                 let newKeyframe = `
                 ${newKeyframePercent} {
                     ${keyframe.cssProperties}
                 }
                 
-                `
+                `;
                 allKeyframes += newKeyframe;
             })
 
@@ -46,12 +62,24 @@ function previewAnim() {
 
                 animation: objectAnim_${sceneObject};
                 animation-duration: ${sceneObject.animationDuration};
-
+                animation-timing-function: ${sceneObject.timingFunction};
             }
             `
-
-            renderInfoPopup.style.display = "none";
+            allCssKeyframeDefs += newCssKeyframeDef;
         })
+
+        let previewAreaFrame = document.getElementById("animPreview");
+        let previewArea = previewAreaFrame.contentDocument || previewAreaFrame.contentWindow.document;
+
+        previewAreaCss = previewArea.createElement("style");
+        previewAreaCss.innerHTML = allCssKeyframeDefs;
+        previewAreaScript = previewArea.createElement("script");
+        previewAreaScript.innerHTML = allJsTimes;
+
+        previewArea.body.appendChild(previewAreaCss);
+        previewArea.body.appendChild(previewAreaScript);
+            
+        renderInfoPopup.style.display = "none";
 
     } else {
         playBtn.textContent = "▶";
