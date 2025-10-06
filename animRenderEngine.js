@@ -28,14 +28,14 @@ function previewAnim() {
                 let rawKeyframeProgress = curKeyframeProgress / Object.keys(projJsonFile.objects[sceneObject].keyframes).length;
                 renderProgressBar.value = rawKeyframeProgress * 100;
 
-                let newKeyframePercent = keyframe.positionSecs - projJsonFile.objects[sceneObject].keyframes[1].positionSecs;
+                let newKeyframePercent = keyframe.position_secs - projJsonFile.objects[sceneObject].keyframes[1].position_secs;
                 newKeyframePercent = newKeyframePercent / sceneObject.animationDuration;
 
                 if (keyframe === "1") {
                     let newJsTime = `
                     setTimeout(function() {
                         
-                    }, ${keyframe.positionSecs});
+                    }, ${keyframe.position_secs});
 
                     `;
                     allJsTimes += newJsTime;
